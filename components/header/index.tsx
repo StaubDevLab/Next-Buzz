@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from "next/link";
+import HeaderLink from "@/components/header-link";
 
 const Header = () => {
+
     return (
         <header id="main-header">
             <div id="logo">
@@ -9,9 +11,9 @@ const Header = () => {
             </div>
             <nav>
                 <ul>
-                    <li>
-                        <Link href="/news">News</Link>
-                    </li>
+                    <HeaderLink pathName={"news"}>News</HeaderLink>
+                    <HeaderLink pathName={"archive"}>Archive</HeaderLink>
+
                 </ul>
             </nav>
         </header>
