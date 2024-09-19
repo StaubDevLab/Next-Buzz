@@ -1,24 +1,24 @@
 services:
-  foodies:
+  next-buzz:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    container_name: foodies
+    container_name: next-buzz
     ports:
       - '3000:3000'
     volumes:
       - ./:/app
       - /app/node_modules
     depends_on:
-      - db
-  db:
+      - db-buzz
+  db-buzz:
     image: postgres:14
-    container_name: db
+    container_name: db-buzz
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: foodies
+      POSTGRES_DB: next-buzz
     volumes:
       - postgres_data:/var/lib/postgresql/data
 volumes:
