@@ -4,6 +4,7 @@ import Image from "next/image";
 import {News} from "@/@types/News";
 
 const NewsList = ({news} : {news : News[]}) => {
+
     return (
         <div>
             <ul className={"news-list"}>

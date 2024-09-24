@@ -3,18 +3,20 @@ import NewsList from "@/components/news-list";
 import {getAvailableNewsMonths, getAvailableNewsYears, getNewsForYear, getNewsForYearAndMonth} from "@/lib/news";
 import Link from "next/link";
 
-const FilteredNewsPage = ({params}:{params:{filter:string}}) => {
+const FilteredNewsPage = async ({params}:{params:{filter:string}}) => {
     const filter = params.filter;
     const selectedYear = filter?.[0]
     const selectedMonth = filter?.[1]
+    const years = await getAvailableNewsYears()
     let news;
-    let links = getAvailableNewsYears()
+    let months;
+    let links = years
     if (selectedYear && !selectedMonth) {
-        news = getNewsForYear(selectedYear);
-        links = getAvailableNewsMonths(selectedYear);
+        news = await getNewsForYear(selectedYear);
+        links = await getAvailableNewsMonths(+selectedYear);
     }
     if (selectedYear && selectedMonth) {
-        news = getNewsForYearAndMonth(selectedYear, selectedMonth);
+        news = await getNewsForYearAndMonth(selectedYear, selectedMonth);
         links = []
     }
     let newsContent = <p>No news found for the selected period</p>;
@@ -22,8 +24,9 @@ const FilteredNewsPage = ({params}:{params:{filter:string}}) => {
     if (news && news.length > 0) {
         newsContent = <NewsList news={news}/>
     }
-    if (selectedYear && !getAvailableNewsYears().includes(+selectedYear) ||
-        selectedMonth && !getAvailableNewsMonths(selectedYear).includes(+selectedMonth)) {
+    months = await getAvailableNewsMonths(+selectedYear) as number[]
+    if (selectedYear && !years.includes(+selectedYear) ||
+        selectedMonth && months && !months.includes(+selectedMonth)) {
         throw new Error('Invalid filter')
     }
 
