@@ -1,9 +1,10 @@
 import React from 'react';
+import Spinner from "@/components/spinner";
 
 const NewsLoadingPage = () => {
     return (
         <div>
-            Loading...
+            <Spinner />
         </div>
     );
 };
